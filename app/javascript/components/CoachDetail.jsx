@@ -11,8 +11,8 @@ const CoachDetail = () => {
   const [availabilities, setAvailabilities] = useState([]);
 
   useEffect(() => {
-    axios.get(`/coaches/${id}`).then(response => setCoach(response.data));
-    axios.get(`/coaches/${id}/availabilities`).then(response => setAvailabilities(response.data));
+    axios.get(`/api/v1/coaches/${id}`).then(response => setCoach(response.data));
+    axios.get(`/api/v1/coaches/${id}/availabilities`).then(response => setAvailabilities(response.data));
   }, [id]);
 
   if (!coach) return <div>Loading...</div>;

@@ -8,7 +8,7 @@ const CoachList = () => {
   const [coaches, setCoaches] = useState([]);
 
   useEffect(() => {
-    axios.get('/coaches').then(response => setCoaches(response.data));
+    axios.get('/api/v1/coaches').then(response => setCoaches(response.data));
   }, []);
 
   return (

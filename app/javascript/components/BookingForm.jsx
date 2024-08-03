@@ -16,7 +16,7 @@ const BookingForm = ({ coachId, time, onBookingConfirmed }) => {
       booked_at: time,
     };
 
-    axios.post('/bookings', booking)
+    axios.post('/api/v1/bookings', booking)
       .then(response => {
         toast.success(`Confirmed booking for slot: ${time}!`);
         onBookingConfirmed(coachId, time);

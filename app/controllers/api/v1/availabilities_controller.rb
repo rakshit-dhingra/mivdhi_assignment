@@ -1,4 +1,4 @@
-class AvailabilitiesController < ApplicationController
+class Api::V1::AvailabilitiesController < ApplicationController
   def index
     coach = Coach.find(params[:coach_id])
     availabilities = coach.coach_availabilities

@@ -1,5 +1,5 @@
 # app/controllers/bookings_controller.rb
-class BookingsController < ApplicationController
+class Api::V1::BookingsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create

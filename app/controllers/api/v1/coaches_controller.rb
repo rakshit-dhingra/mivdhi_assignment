@@ -1,4 +1,4 @@
-class CoachesController < ApplicationController
+class Api::V1::CoachesController < ApplicationController
   def index
     coaches = Coach.all
     render json: coaches
