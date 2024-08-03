@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment-timezone';
 import AvailabilityList from './AvailabilityList';
 import './CoachDetail.css'; // Import the CSS file
 
@@ -12,7 +13,7 @@ const CoachDetail = () => {
 
   useEffect(() => {
     axios.get(`/api/v1/coaches/${id}`).then(response => setCoach(response.data));
-    axios.get(`/api/v1/coaches/${id}/availabilities`).then(response => setAvailabilities(response.data));
+    axios.get(`/api/v1/coaches/${id}/availabilities?timezone=${moment.tz.guess()}`).then(response => setAvailabilities(response.data));
   }, [id]);
 
   if (!coach) return <div>Loading...</div>;
