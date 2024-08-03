@@ -31,17 +31,17 @@ const AvailabilityList = ({ initialAvailabilities = [] }) => {
         availabilities.map((availability, index) => (
           <div key={index}>
             <h4>{availability.day_of_week}</h4>
-            <ul>
+            <div className="time-slot-container">
               {availability.time_slots.map((slot, index) => (
-                <li key={index}>
+                <div key={index} className="time-slot">
                   <BookingForm
                     coachId={availability.coach_id}
                     time={slot}
                     onBookingConfirmed={handleBookingConfirmed}
                   />
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         ))
       ) : (
