@@ -1,0 +1,21 @@
+/* app/javascript/components/CoachDetail.css */
+.coach-detail {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.coach-detail h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.coach-detail h2 {
+  font-size: 1.5em;
+  color: #666;
+}
+
+.coach-detail .availability-list {
+  margin-top: 20px;
+}

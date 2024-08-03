@@ -1,0 +1,33 @@
+/* app/javascript/components/AvailabilityList.css */
+.availability-list {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.availability-list h3 {
+  font-size: 1.8em;
+  color: #333;
+}
+
+.availability-list h4 {
+  font-size: 1.4em;
+  color: #555;
+}
+
+.availability-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.availability-list li {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.availability-list p {
+  font-size: 1.2em;
+  color: #777;
+}

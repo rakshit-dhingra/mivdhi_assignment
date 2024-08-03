@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AvailabilityList from './AvailabilityList';
+import './CoachDetail.css'; // Import the CSS file
 
 const CoachDetail = () => {
   const { id } = useParams();
@@ -17,10 +18,12 @@ const CoachDetail = () => {
   if (!coach) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="coach-detail">
       <h1>{coach.name}</h1>
       <h2>{coach.timezone}</h2>
-      <AvailabilityList availabilities={availabilities} />
+      <div className="availability-list">
+        <AvailabilityList initialAvailabilities={availabilities} />
+      </div>
     </div>
   );
 };

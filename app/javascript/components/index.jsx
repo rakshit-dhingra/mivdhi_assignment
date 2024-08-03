@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CoachList from '../components/CoachList';
 import CoachDetail from '../components/CoachDetail';
+import { ToastContainer } from 'react-toastify'; 
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/" element={<CoachList />} />
           <Route path="/coaches/:id" element={<CoachDetail />} />
         </Routes>
+        <ToastContainer /> {/* Add the ToastContainer here */}
       </div>
     </Router>
   );

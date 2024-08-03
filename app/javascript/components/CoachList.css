@@ -1,0 +1,37 @@
+.coach-list {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.coach-list h1 {
+  text-align: center;
+  color: #333;
+}
+
+.coach-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.coach-list li {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+.coach-list li:hover {
+  background-color: #f1f1f1;
+}
+
+.coach-list a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.coach-list a:hover {
+  text-decoration: underline;
+}
