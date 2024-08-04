@@ -24,11 +24,11 @@ class Api::V1::AvailabilitiesController < ApplicationController
   end
 
   def format_availability(availability, bookings)
-    start_time = availability.available_at.in_time_zone(find_valid_timezone(availability.coach.timezone)).in_time_zone(params[:timezone])
-    end_time = availability.available_until.in_time_zone(find_valid_timezone(availability.coach.timezone)).in_time_zone(params[:timezone])
+    start_time = availability.available_at#.in_time_zone(find_valid_timezone(availability.coach.timezone)).in_time_zone(params[:timezone])
+    end_time = availability.available_until.in_time_zone(find_valid_timezone(availability.coach.timezone))#.in_time_zone(params[:timezone])
     # Generate slots and check booking status
     slots = generate_time_slots(start_time, end_time).reject do |slot|
-      booked?(slot, bookings)
+      booked?(slot, bookings,availability.day_of_week)
     end.map { |time| time.strftime('%H:%M') }
     {
       id: availability.id,
@@ -48,11 +48,11 @@ class Api::V1::AvailabilitiesController < ApplicationController
     end
   end
 
-  def booked?(time, bookings)
+  def booked?(time, bookings,day_of_week)
     bookings.any? do |booking|
-      booking_time = booking.time_slot.in_time_zone(booking.time_slot.time_zone)
+      booking_time = booking.time_slot.in_time_zone(params[:timezone])
       # Compare only the time component of the datetime objects
-      time.strftime('%H:%M') == booking_time.strftime('%H:%M')
+      time.strftime('%H:%M') == booking_time.strftime('%H:%M') && day_of_week == booking.day_of_week
     end
   end
 end

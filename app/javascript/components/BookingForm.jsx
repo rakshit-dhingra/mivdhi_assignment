@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import './BookingForm.css';
+import moment from 'moment-timezone';
 import { toast } from 'react-toastify'; // Import the toast function from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import the toast styles
 
@@ -9,17 +10,19 @@ import 'react-toastify/dist/ReactToastify.css'; // Import the toast styles
 // import { ToastContainer } from 'react-toastify';
 // <ToastContainer />
 
-const BookingForm = ({ coachId, time, onBookingConfirmed }) => {
+const BookingForm = ({ coachId, time, day_of_week, onBookingConfirmed }) => {
   const handleBooking = () => {
     const booking = {
       coach_id: coachId,
       booked_at: time,
+      day_of_week: day_of_week,
+      timezone: moment.tz.guess(),
     };
 
     axios.post('/api/v1/bookings', booking)
       .then(response => {
         toast.success(`Confirmed booking for slot: ${time}!`);
-        onBookingConfirmed(coachId, time);
+        onBookingConfirmed(coachId, time, day_of_week);
       })
       .catch(error => {
          toast.error(`Error booking time slot: ${time}.`);

@@ -17,9 +17,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_02_154603) do
   create_table "bookings", force: :cascade do |t|
     t.bigint "coach_id", null: false
     t.datetime "time_slot", null: false
+    t.string "day_of_week"
+    t.string "timezone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["coach_id", "time_slot"], name: "index_bookings_on_coach_id_and_time_slot", unique: true
+    t.index ["coach_id", "time_slot", "day_of_week"], name: "index_bookings_on_coach_id_and_time_slot_and_day_of_week", unique: true
     t.index ["coach_id"], name: "index_bookings_on_coach_id"
   end
 

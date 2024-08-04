@@ -7,6 +7,7 @@ class Api::V1::BookingsController < ApplicationController
     time_slot = params[:booked_at]
 
     # Use the current date if the date is not provided
+    Time.zone = params[:timezone]
     current_date = Time.zone.now.to_date.to_s
 
     coach = Coach.find_by(id: coach_id)
@@ -17,12 +18,43 @@ class Api::V1::BookingsController < ApplicationController
     time_slot_with_date = "#{current_date} #{time_slot}"
     time_slot_utc = Time.zone.parse(time_slot_with_date)
 
-
-    booking = coach.bookings.new(time_slot: time_slot_utc)
+    unless valid_time_slot?(coach, time_slot_utc)
+      render json: { error: 'Invalid time slot' }, status: :unprocessable_entity and return
+    end
+    booking = coach.bookings.new(time_slot: time_slot_utc, day_of_week: params[:day_of_week], timezone: params[:timezone])
     if booking.save
       render json: { message: 'Booking created successfully' }, status: :created
     else
       render json: { error: booking.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def find_valid_timezone(timezone)
+    # Extract the part after the offset
+    match = timezone.match(/\((GMT[+-]\d{2}:\d{2})\)\s(.+)/)
+    return nil unless match
+    
+    extracted_timezone = match[2]
+    
+    # Check if the extracted timezone is valid
+    if ActiveSupport::TimeZone[extracted_timezone].present?
+      return extracted_timezone
+    else
+      return nil
+    end
+  end
+
+  def valid_time_slot?(coach, time_slot)
+    availabilities = coach.coach_availabilities.select do |availability|
+      availability_start = availability.available_at.change(year: 2000, month: 1, day: 1)
+      availability_end = availability.available_until.change(year: 2000, month: 1, day: 1)
+      time_only = time_slot.change(year: 2000, month: 1, day: 1)
+
+      time_only.between?(availability_start, availability_end)
+    end
+
+    availabilities.any?
   end
 end

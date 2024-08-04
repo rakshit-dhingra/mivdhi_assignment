@@ -10,10 +10,10 @@ const AvailabilityList = ({ initialAvailabilities = [] }) => {
     setAvailabilities(initialAvailabilities);
   }, [initialAvailabilities]);
 
-  const handleBookingConfirmed = (coachId, time) => {
+  const handleBookingConfirmed = (coachId, time, day_of_week) => {
     setAvailabilities((prevAvailabilities) =>
       prevAvailabilities.map((availability) => {
-        if (availability.coach_id === coachId) {
+        if (availability.coach_id === coachId && availability.day_of_week === day_of_week) {
           return {
             ...availability,
             time_slots: availability.time_slots.filter((slot) => slot !== time),
@@ -37,6 +37,7 @@ const AvailabilityList = ({ initialAvailabilities = [] }) => {
                   <BookingForm
                     coachId={availability.coach_id}
                     time={slot}
+                    day_of_week={availability.day_of_week}
                     onBookingConfirmed={handleBookingConfirmed}
                   />
                 </div>
