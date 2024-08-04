@@ -1,4 +1,3 @@
-# app/controllers/bookings_controller.rb
 class Api::V1::BookingsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
@@ -30,21 +29,6 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   private
-
-  def find_valid_timezone(timezone)
-    # Extract the part after the offset
-    match = timezone.match(/\((GMT[+-]\d{2}:\d{2})\)\s(.+)/)
-    return nil unless match
-    
-    extracted_timezone = match[2]
-    
-    # Check if the extracted timezone is valid
-    if ActiveSupport::TimeZone[extracted_timezone].present?
-      return extracted_timezone
-    else
-      return nil
-    end
-  end
 
   def valid_time_slot?(coach, time_slot)
     availabilities = coach.coach_availabilities.select do |availability|

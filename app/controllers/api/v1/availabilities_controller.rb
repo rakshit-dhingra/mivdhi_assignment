@@ -8,25 +8,9 @@ class Api::V1::AvailabilitiesController < ApplicationController
 
   private
 
-  def find_valid_timezone(timezone)
-    # Extract the part after the offset
-    match = timezone.match(/\((GMT[+-]\d{2}:\d{2})\)\s(.+)/)
-    return nil unless match
-    
-    extracted_timezone = match[2]
-    
-    # Check if the extracted timezone is valid
-    if ActiveSupport::TimeZone[extracted_timezone].present?
-      return extracted_timezone
-    else
-      return nil
-    end
-  end
-
   def format_availability(availability, bookings)
-    start_time = availability.available_at#.in_time_zone(find_valid_timezone(availability.coach.timezone)).in_time_zone(params[:timezone])
-    end_time = availability.available_until.in_time_zone(find_valid_timezone(availability.coach.timezone))#.in_time_zone(params[:timezone])
-    # Generate slots and check booking status
+    start_time = availability.available_at
+    end_time = availability.available_until
     slots = generate_time_slots(start_time, end_time).reject do |slot|
       booked?(slot, bookings,availability.day_of_week)
     end.map { |time| time.strftime('%H:%M') }
