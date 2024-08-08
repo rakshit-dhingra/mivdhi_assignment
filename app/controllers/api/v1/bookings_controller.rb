@@ -34,7 +34,9 @@ class Api::V1::BookingsController < ApplicationController
     availabilities = coach.coach_availabilities.select do |availability|
       availability_start = availability.available_at.change(year: 2000, month: 1, day: 1)
       availability_end = availability.available_until.change(year: 2000, month: 1, day: 1)
+      availability_end += 1.day if availability_end < availability_start
       time_only = time_slot.change(year: 2000, month: 1, day: 1)
+      time_only += 1.day if time_only < availability_start
 
       time_only.between?(availability_start, availability_end)
     end

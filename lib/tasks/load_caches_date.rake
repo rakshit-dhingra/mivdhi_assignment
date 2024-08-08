@@ -6,6 +6,7 @@ namespace :load_data do
     
     CSV.foreach(file_path, headers: true) do |row|
       coach = Coach.find_or_create_by(name: row['Name'], timezone: row['Timezone'])
+      Time.zone = coach.timezone.split(' ').drop(1).join(' ')
       CoachAvailability.create(
         coach: coach,
         day_of_week: row['Day of Week'],
